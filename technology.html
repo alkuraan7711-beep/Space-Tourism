@@ -1,0 +1,92 @@
+<!DOCTYPE html> <!-- نوع المستند -->
+<html lang="en"> <!-- بداية الصفحة -->
+<head>
+  <meta charset="UTF-8" /> <!-- الترميز -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- التجاوب -->
+  <title>Space Tourism | Technology</title> <!-- عنوان التاب -->
+  <link rel="icon" href="assets/shared/logo.svg" /> <!-- أيقونة الموقع -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" /> <!-- فتح الاتصال بجوجل فونتس بدري -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bellefair&family=Barlow+Condensed:wght@400;700&family=Barlow:wght@400;700&display=swap" /> <!-- الخطوط -->
+  <link rel="stylesheet" href="css/style.css" /> <!-- الستايل -->
+</head>
+<body class="technology"> <!-- كلاس technology بيحدد خلفية الصفحة دي -->
+
+  <!-- ============================ الهيدر + النافيجيشن ============================ -->
+  <header class="primary-header flex">
+    <div class="logo-container">
+      <img src="assets/shared/logo.svg" alt="Space Tourism Logo" class="logo" width="48" height="48" /> <!-- اللوجو -->
+    </div>
+
+    <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Menu" data-nav-toggle>
+      <img src="assets/shared/icon-hamburger.svg" alt="" aria-hidden="true" /> <!-- زرار الهامبرجر -->
+    </button>
+
+    <nav>
+      <ul id="primary-navigation" data-visible="false" class="primary-navigation underline-indicators flex">
+        <li><a class="nav-link" href="index.html"><span aria-hidden="true">00</span>Home</a></li>
+        <li><a class="nav-link" href="destination.html"><span aria-hidden="true">01</span>Destination</a></li>
+        <li><a class="nav-link" href="crew.html"><span aria-hidden="true">02</span>Crew</a></li>
+        <li><a class="nav-link active" aria-current="page" href="technology.html"><span aria-hidden="true">03</span>Technology</a></li> <!-- active هنا -->
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ============================ المحتوى الرئيسي ============================ -->
+  <main class="grid-container grid-container--technology">
+    <h1 class="numbered-title technology-title">
+      <span aria-hidden="true">03</span> Space launch 101 <!-- عنوان الصفحة -->
+    </h1>
+
+    <!-- أرقام الاختيار بين الصاروخ والقاعدة والكبسولة -->
+    <div class="number-indicators flex technology-tabs" role="tablist" aria-label="technology list">
+      <button aria-selected="true" role="tab" tabindex="0" data-value="Launch vehicle" class="text-preset-3">1</button>
+      <button aria-selected="false" role="tab" tabindex="-1" data-value="Spaceport" class="text-preset-3">2</button>
+      <button aria-selected="false" role="tab" tabindex="-1" data-value="Space capsule" class="text-preset-3">3</button>
+    </div>
+
+    <article class="technology-info flex">
+      <div>
+        <h2 class="text-preset-4">The terminology...</h2> <!-- عنوان فرعي ثابت مش بيتغير -->
+        <p id="technology-name" class="text-preset-3 uppercase">Launch vehicle</p> <!-- اسم العنصر التكنولوجي الحالي -->
+      </div>
+      <p id="technology-description" class="text-accent">
+        <!-- الوصف النصي، بيتغير بالجافاسكريبت -->
+        A launch vehicle or carrier rocket is a rocket-propelled vehicle used to carry
+        a payload from Earth's surface to space, usually to Earth orbit or beyond. Our
+        WEB-X carrier rocket is the most powerful in operation. Standing 150 metres
+        tall, it's quite an awe-inspiring sight on the launch pad!
+      </p>
+    </article>
+
+    <!-- الصورة: لاندسكيب (عريضة) في الموبايل/التابلت، بورتريه (طولية) في الديسكتوب -->
+    <picture class="technology-image">
+      <!-- الصورة الطولية تظهر بس من عرض 64em فما فوق (الديسكتوب) -->
+      <source id="technology-img-portrait" media="(min-width: 64em)" srcset="assets/technology/image-launch-vehicle-portrait.jpg" />
+      <img id="technology-img" src="assets/technology/image-launch-vehicle-landscape.jpg" alt="Launch vehicle" />
+    </picture>
+  </main>
+
+  <script src="js/data.js"></script> <!-- ملف البيانات -->
+  <script src="js/script.js"></script> <!-- الأكواد المشتركة -->
+  <script>
+    // -------------------- كود خاص بصفحة التكنولوجي بس -------------------- //
+
+    // دالة بتاخد اسم العنصر التكنولوجي وتعرض بياناته
+    function renderTechnology(name) {
+      // ندور على العنصر المطلوب جوه مصفوفة التكنولوجي
+      const tech = SPACE_DATA.technology.find((t) => t.name === name);
+      if (!tech) return; // أمان لو مش لاقيه
+
+      document.getElementById('technology-name').textContent = tech.name;               // تحديث الاسم
+      document.getElementById('technology-description').textContent = tech.description; // تحديث الوصف
+      document.getElementById('technology-img').src = tech.images.landscape;             // تحديث الصورة العريضة (موبايل وتابلت، افتراضي)
+      document.getElementById('technology-img-portrait').srcset = tech.images.portrait;  // تحديث الصورة الطولية (ديسكتوب)
+      document.getElementById('technology-img').alt = tech.name;                          // تحديث النص البديل
+    }
+
+    // تفعيل نظام الأرقام (تابات) وربطه بدالة renderTechnology
+    setupTabs('.technology-tabs', (value) => renderTechnology(value));
+  </script>
+</body>
+</html>

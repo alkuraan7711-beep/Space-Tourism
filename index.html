@@ -1,0 +1,60 @@
+<!DOCTYPE html> <!-- بيقول للمتصفح إن الملف ده HTML5 -->
+<html lang="en"> <!-- بداية صفحة الـ HTML، واللغة إنجليزي -->
+<head> <!-- هيدر الصفحة اللي فيه معلومات مش ظاهرة للمستخدم -->
+  <meta charset="UTF-8" /> <!-- ترميز الحروف عشان يدعم كل اللغات صح -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- يخلي الصفحة متجاوبة مع عرض الجهاز -->
+  <title>Space Tourism | Home</title> <!-- عنوان التاب اللي بيظهر فوق في المتصفح -->
+  <link rel="icon" href="assets/shared/logo.svg" /> <!-- أيقونة الموقع الصغيرة (الفافيكون) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" /> <!-- فتح الاتصال بجوجل فونتس بدري -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bellefair&family=Barlow+Condensed:wght@400;700&family=Barlow:wght@400;700&display=swap" /> <!-- الخطوط -->
+  <link rel="stylesheet" href="css/style.css" /> <!-- ربط ملف الستايل الرئيسي -->
+</head>
+<body class="home"> <!-- كلاس "home" بيحدد صورة خلفية الصفحة دي -->
+
+  <!-- ============================ الهيدر + النافيجيشن ============================ -->
+  <header class="primary-header flex"> <!-- الهيدر بيحتوي اللوجو والنافيجيشن -->
+    <div class="logo-container"> <!-- حاوية اللوجو -->
+      <img src="assets/shared/logo.svg" alt="Space Tourism Logo" class="logo" width="48" height="48" /> <!-- لوجو الموقع -->
+    </div>
+
+    <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Menu" data-nav-toggle>
+      <!-- زرار الهامبرجر اللي بيظهر بس في الموبايل لفتح القايمة -->
+      <img src="assets/shared/icon-hamburger.svg" alt="" aria-hidden="true" /> <!-- أيقونة الهامبرجر -->
+    </button>
+
+    <nav> <!-- عنصر النافيجيشن -->
+      <ul id="primary-navigation" data-visible="false" class="primary-navigation underline-indicators flex">
+        <!-- data-visible بيتحكم فيه الجافاسكريبت لإظهار/إخفاء القايمة بالموبايل -->
+        <li><a class="nav-link active" aria-current="page" href="index.html"><span aria-hidden="true">00</span>Home</a></li> <!-- لينك الهوم، active لأننا فيها دلوقتي -->
+        <li><a class="nav-link" href="destination.html"><span aria-hidden="true">01</span>Destination</a></li> <!-- لينك صفحة الوجهة -->
+        <li><a class="nav-link" href="crew.html"><span aria-hidden="true">02</span>Crew</a></li> <!-- لينك صفحة الطاقم -->
+        <li><a class="nav-link" href="technology.html"><span aria-hidden="true">03</span>Technology</a></li> <!-- لينك صفحة التكنولوجي -->
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ============================ المحتوى الرئيسي ============================ -->
+  <main class="grid-container grid-container--home"> <!-- الحاوية الرئيسية بتاعة محتوى الهوم -->
+    <div> <!-- حاوية العنوان والفقرة -->
+      <h1 class="text-preset-4">
+        <span class="text-accent d-block">So, you want to travel to</span> <!-- الجملة التمهيدية بلون باهت -->
+        <span class="text-preset-1">Space</span> <!-- الكلمة الكبيرة "Space" بخط العناوين -->
+      </h1>
+      <p class="text-accent">
+        <!-- الفقرة التعريفية اللي بتشرح فكرة الموقع -->
+        Let's face it; if you want to go to space, you might as well genuinely go to
+        outer space and not hover kind of on the edge of it. Well sit back, and relax
+        because we'll give you a truly out of this world experience!
+      </p>
+    </div>
+
+    <a href="destination.html" class="large-button"> <!-- زرار الاستكشاف بيودي على صفحة الوجهة -->
+      <span class="text-preset-2" aria-hidden="true">Explore</span> <!-- النص الظاهر جوه الزرار -->
+      <span class="sr-only">Explore the space tourism destinations</span> <!-- نص إضافي لقاري الشاشة يوضح وظيفة الزرار -->
+    </a>
+  </main>
+
+  <script src="js/script.js"></script> <!-- ربط ملف الجافاسكريبت في آخر الصفحة عشان يحمل بعد الـ HTML -->
+</body>
+</html>
