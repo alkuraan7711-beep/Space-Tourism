@@ -1,0 +1,709 @@
+/* ==========================================================================
+   ملف الستايل الرئيسي - بيتشارك بين كل صفحات موقع Space Tourism
+   ========================================================================== */
+
+/* الخطوط (Bellefair / Barlow Condensed / Barlow) بتتحمل من <link> في <head> كل صفحة، أسرع من @import */
+
+/* ---------- Reset بسيط عشان كل المتصفحات تتصرف بنفس الشكل ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* البادينج والبوردر يتحسبوا جوه العرض مش يزودوا عليه */
+  margin: 0;              /* شيل أي مارجن افتراضي من المتصفح */
+  padding: 0;             /* شيل أي بادينج افتراضي من المتصفح */
+}
+
+html {
+  scroll-behavior: smooth; /* أي تنقل بالـ anchor يبقى بسلاسة */
+}
+
+/* المتغيرات (CSS Variables) - الألوان والمسافات المستخدمة في كل الموقع */
+:root {
+  --clr-dark: 230 35% 7%;        /* اللون الغامق الأساسي (كحلي قريب للأسود) بصيغة HSL بدون hsl() */
+  --clr-light: 231 77% 90%;      /* لون رمادي فاتح مائل للأزرق للنصوص التانوية */
+  --clr-white: 0 0% 100%;        /* اللون الأبيض النقي */
+
+  --ff-serif: "Bellefair", serif;              /* خط العناوين الكبيرة */
+  --ff-sans-cond: "Barlow Condensed", sans-serif; /* خط الليبلز والنصوص الصغيرة المتباعدة */
+  --ff-sans-normal: "Barlow", sans-serif;       /* خط النص العادي (الفقرات) */
+}
+
+body {
+  font-family: var(--ff-sans-normal);      /* الخط الافتراضي لكل النصوص */
+  background-color: hsl(var(--clr-dark));  /* خلفية الصفحة غامقة */
+  color: hsl(var(--clr-white));            /* لون النص أبيض عشان يبان على الغامق */
+  line-height: 1.5;                        /* تباعد بين السطور يريح العين */
+  min-height: 100vh;                       /* الصفحة تاخد ارتفاع الشاشة كامل كحد أدنى */
+}
+
+/* أي صورة تاخد أقصى عرض حاوية أبوها عشان متكسرش التصميم */
+img,
+picture {
+  max-width: 100%;
+  height: auto;   /* يحافظ على النسبة لما نحط width/height attributes */
+  display: block; /* نشيل الفراغ الصغير اللي بيظهر تحت الصور عادة */
+}
+
+/* خلي عناصر الفورم (لو استخدمناها) توّرث نفس الخط بدل خط المتصفح الافتراضي */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* -------------------- كلاسات مساعدة (Utility classes) -------------------- */
+
+.flex {
+  display: flex;    /* تفعيل الفلكس */
+  gap: var(--gap, 1rem); /* المسافة بين العناصر، قابلة للتغيير عبر متغير gap */
+}
+
+.grid {
+  display: grid;     /* تفعيل الجريد */
+  gap: var(--gap, 1rem); /* نفس فكرة الفلكس بس للجريد */
+}
+
+.d-block {
+  display: block; /* يخلي العنصر بلوك، مفيد لإخفاء/إظهار حسب الشاشة */
+}
+
+/* نص لقراء الشاشة بس (Accessibility) - مخفي بصريا لكن موجود للـ screen readers */
+.sr-only {
+  position: absolute;      /* نطلعه بره تدفق الصفحة */
+  width: 1px;               /* عرض ضئيل جدا */
+  height: 1px;              /* ارتفاع ضئيل جدا */
+  padding: 0;               /* بدون حشو */
+  margin: -1px;             /* نخفيه فعليا */
+  overflow: hidden;         /* أي زيادة تتقص */
+  clip: rect(0, 0, 0, 0);   /* قص العنصر لصفر */
+  white-space: nowrap;      /* منع لف النص */
+  border: 0;                /* بدون حدود */
+}
+
+.container {
+  padding-inline: 2rem;   /* حشو يمين وشمال ثابت للمحتوى */
+  max-width: 80rem;       /* أقصى عرض للمحتوى عشان مايتمططش في الشاشات الكبيرة جدا */
+  margin-inline: auto;    /* نخلي الحاوية في النص */
+}
+
+/* عنوان الأرقام زي "01" أو "02" قبل العناوين الرئيسية */
+.numbered-title {
+  font-family: var(--ff-sans-cond); /* خط الليبلز المتباعد */
+  font-size: clamp(1.5rem, 5vw, 1.75rem); /* حجم متجاوب بين حد أدنى وأقصى */
+  text-transform: uppercase;  /* حروف كبيرة */
+  letter-spacing: 4.72px;     /* تباعد بين الحروف */
+  text-align: center;         /* توسيط في الموبايل */
+}
+
+.numbered-title span {
+  margin-right: 0.5rem;               /* مسافة بعد الرقم */
+  font-weight: 700;                   /* الرقم يبقى بولد */
+  color: hsl(var(--clr-white) / 0.25); /* الرقم شفاف شوية عشان يبقى تفصيلة مش أساسي */
+}
+
+/* ---------------------------- الهيدر والنافيجيشن ---------------------------- */
+
+.primary-header {
+  justify-content: space-between; /* اللوجو شمال والنافيجيشن يمين */
+  align-items: center;            /* توسيط رأسي */
+  padding-top: 1.5rem;            /* مسافة من فوق */
+}
+
+.logo {
+  margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem); /* مسافة حوالين اللوجو متجاوبة */
+}
+
+/* الخط الفاصل جنب النافيجيشن في الشاشات الكبيرة (مخفي في الموبايل) */
+.primary-header::after {
+  content: '';                              /* عنصر فاضي بس عشان يظهر كخط */
+  display: block;                           /* يبقى بلوك عشان ياخد عرض */
+  position: relative;                       /* لظبط مكانه */
+  height: 1px;                              /* سمك الخط شعرة واحدة */
+  width: 100%;                              /* ياخد كل العرض */
+  margin-right: -2.5rem;                    /* يمتد لبره الحاوية شوية */
+  background: hsl(var(--clr-white) / 0.25); /* لون الخط أبيض شفاف */
+  order: 1;                                  /* يترتب بعد اللوجو */
+}
+
+.primary-navigation {
+  --gap: 3rem;                        /* المسافة بين لينكات النافيجيشن */
+  --underline-gap: 2rem;              /* المسافة بين النص والخط اللي تحته */
+  list-style: none;                   /* شيل نقط الليست */
+  padding: 0;                         /* بدون حشو */
+  margin: 0;                          /* بدون مارجن */
+  background: hsl(var(--clr-dark) / 0.95); /* خلفية غامقة شبه شفافة */
+}
+
+.primary-navigation a {
+  text-decoration: none; /* شيل الخط اللي تحت اللينك الافتراضي */
+}
+
+.primary-navigation a > span {
+  font-weight: 700;          /* الرقم قبل اسم الصفحة يبقى بولد */
+  margin-right: 0.5rem;      /* مسافة بعد الرقم */
+}
+
+.nav-link {
+  color: hsl(var(--clr-white)); /* لون لينكات النافيجيشن أبيض */
+}
+
+.mobile-nav-toggle {
+  display: none; /* زرار الهامبرجر مخفي في الشاشات الكبيرة، بيظهر بس في الموبايل */
+}
+
+.underline-indicators > * {
+  color: hsl(var(--clr-light));                   /* الزراير مبتورّثش اللون، فبنحدده عشان ميبقاش أسود على الغامق */
+  cursor: pointer;                                /* شكل اليد عند المرور */
+  padding: var(--underline-gap, 1rem) 0;          /* مسافة فوق وتحت العنصر */
+  border: 0;                                       /* بدون حدود افتراضية */
+  border-bottom: 0.2rem solid hsl(var(--clr-white) / 0); /* خط تحتي شفاف بالبداية */
+  background-color: transparent;                  /* خلفية شفافة */
+}
+
+.underline-indicators > *:hover,
+.underline-indicators > *:focus {
+  border-color: hsl(var(--clr-white) / 0.5); /* عند الهوفر الخط يبان بنص شفافية */
+}
+
+.underline-indicators > .active,
+.underline-indicators > [aria-selected="true"] {
+  color: hsl(var(--clr-white) / 1);          /* العنصر النشط لونه أبيض كامل */
+  border-color: hsl(var(--clr-white) / 1);   /* وخطه يبان بالكامل */
+}
+
+/* نقط اختيار الوجهة أو أي مؤشر دائري (مستخدم في صفحة الطاقم بالموبايل) */
+.dot-indicators > * {
+  cursor: pointer;                              /* شكل اليد */
+  border: 0;                                     /* بدون حدود */
+  border-radius: 50%;                            /* شكل دائري */
+  padding: 0.5em;                                /* حجم النقطة */
+  background-color: hsl(var(--clr-white) / 0.25); /* لون خافت افتراضيا */
+}
+
+.dot-indicators > *:hover,
+.dot-indicators > *:focus {
+  background-color: hsl(var(--clr-white) / 0.5); /* أوضح عند الهوفر */
+}
+
+.dot-indicators > [aria-selected="true"] {
+  background-color: hsl(var(--clr-white) / 1); /* النقطة النشطة أبيض كامل */
+}
+
+/* أرقام التابات في صفحة التكنولوجي (1 2 3 جوه دايرة) */
+.number-indicators > * {
+  cursor: pointer;                                     /* شكل اليد */
+  border-radius: 50%;                                  /* دايرة */
+  width: 3rem;                                         /* عرض ثابت */
+  aspect-ratio: 1;                                      /* الارتفاع يساوي العرض عشان تفضل دايرة مظبوطة */
+  display: grid;                                        /* عشان نوسط الرقم جواها */
+  place-items: center;                                  /* توسيط أفقي ورأسي */
+  color: hsl(var(--clr-white));                         /* لون الرقم */
+  background-color: transparent;                        /* خلفية شفافة افتراضيا */
+  border: 1px solid hsl(var(--clr-white) / 0.25);       /* حدود خافتة */
+  font-family: var(--ff-serif);                         /* خط الأرقام زي العناوين */
+}
+
+.number-indicators > *:hover,
+.number-indicators > *:focus {
+  border-color: hsl(var(--clr-white) / 1); /* الحدود تبان أوضح عند الهوفر */
+}
+
+.number-indicators > [aria-selected="true"] {
+  background-color: hsl(var(--clr-white)); /* الرقم النشط خلفيته بيضاء */
+  color: hsl(var(--clr-dark));             /* والنص جواه غامق عشان يتباين */
+}
+
+/* --------------------------- كلاسات نصوص عامة --------------------------- */
+
+.text-preset-1 { font-size: clamp(5rem, 10vw, 9.375rem); font-family: var(--ff-serif); } /* أكبر عنوان في الموقع */
+.text-preset-2 { font-size: clamp(2rem, 6vw, 3.5rem); font-family: var(--ff-serif); } /* عنوان كبير تاني */
+.text-preset-3 { font-size: 1.5rem; font-family: var(--ff-serif); } /* عنوان متوسط */
+.text-preset-4 {
+  font-family: var(--ff-sans-cond);   /* خط الليبلز */
+  font-size: 0.875rem;                 /* حجم صغير */
+  letter-spacing: 2.35px;              /* تباعد حروف */
+  text-transform: uppercase;           /* حروف كبيرة */
+}
+.text-preset-5 {
+  font-family: var(--ff-sans-cond); /* خط الليبلز */
+  font-size: 1.75rem;                 /* حجم أكبر شوية من preset-4 */
+  letter-spacing: 2.7px;              /* تباعد حروف */
+  text-transform: uppercase;          /* حروف كبيرة */
+}
+.text-preset-6 {
+  font-family: var(--ff-sans-normal); /* خط النص العادي */
+  font-weight: 700;                    /* بولد */
+  font-size: 1.75rem;                  /* حجم العنوان */
+}
+
+.text-accent { color: hsl(var(--clr-light)); } /* لون النصوص التانوية (رمادي مزرق) */
+.uppercase { text-transform: uppercase; } /* كلاس بسيط لتحويل النص لحروف كبيرة */
+
+/* -------------------- نافيجيشن الموبايل (منسدلة من اليمين) -------------------- */
+@media (max-width: 35em) {
+  .primary-navigation {
+    --gap: 2rem;                          /* مسافة أقل بين اللينكات بالموبايل */
+    position: fixed;                       /* تثبيت القايمة فوق باقي المحتوى */
+    z-index: 1000;                         /* تفضل فوق كل حاجة */
+    inset: 0 0 0 30%;                      /* تاخد من 30% للنهاية (يمين الشاشة) */
+    list-style: none;                      /* بدون نقط */
+    padding: min(20rem, 15vh) 2rem;        /* حشو كبير من فوق عشان اللينكات تنزل تحت الهيدر */
+    flex-direction: column;                /* ترتيب رأسي للينكات */
+    transform: translateX(100%);           /* مخفية بره الشاشة يمين بالبداية */
+    visibility: hidden;                    /* مقفولة: مش بتاخد Tab ومش بتتقرا */
+    transition: transform 500ms ease-in-out, visibility 0s 500ms; /* نخفيها بعد ما الحركة تخلص */
+  }
+
+  .primary-navigation[data-visible="true"] {
+    transform: translateX(0); /* تظهر القايمة لما data-visible تبقى true */
+    visibility: visible;
+    transition-delay: 0s;     /* تظهر فورًا */
+  }
+
+  .mobile-nav-toggle {
+    display: block;               /* إظهار زرار الهامبرجر بس بالموبايل */
+    position: fixed;              /* تثبيته فوق الصفحة */
+    z-index: 2000;                /* يفضل فوق القايمة عشان نقدر نضغط عليه دايما */
+    right: 1rem;                  /* مسافة من يمين الشاشة */
+    top: 2rem;                    /* مسافة من فوق */
+    background: transparent;      /* بدون خلفية */
+    border: 0;                    /* بدون حدود */
+    background-image: url('../assets/shared/icon-hamburger.svg'); /* أيقونة الهامبرجر كخلفية */
+    background-repeat: no-repeat; /* عدم تكرار الأيقونة */
+    background-position: center;  /* توسيط الأيقونة */
+    width: 1.5rem;                /* عرض الزرار */
+    aspect-ratio: 1;              /* يفضل مربع */
+  }
+
+  .mobile-nav-toggle img {
+    display: none; /* نخفي صورة الـ img العادية لأننا بنستخدم الأيقونة كـ background */
+  }
+
+  .mobile-nav-toggle[aria-expanded="true"] {
+    background-image: url('../assets/shared/icon-close.svg'); /* لما القايمة مفتوحة يتحول لأيقونة إغلاق (X) */
+  }
+
+  .primary-header {
+    padding-inline: 1rem; /* حشو جانبي للهيدر بالموبايل */
+  }
+
+  .primary-header::after {
+    display: none; /* نخفي الخط الفاصل بتاع الديسكتوب في الموبايل */
+  }
+}
+
+/* من عرض 35em فما فوق (تابلت وديسكتوب) نخفي زرار الهامبرجر خالص */
+@media (min-width: 35em) {
+  .mobile-nav-toggle {
+    display: none; /* مفيش داعي له لأن القايمة ظاهرة بشكل دائم */
+  }
+
+  .primary-navigation {
+    padding-inline: clamp(3rem, 7vw, 7rem); /* حشو جانبي متجاوب حسب عرض الشاشة */
+  }
+}
+
+/* --------------------------- خلفية الصفحة (Backdrop) --------------------------- */
+/* كل صفحة بتحدد صورة الخلفية بتاعتها عن طريق كلاس مختلف على body */
+
+body {
+  background-position: bottom center; /* الخلفية تتوسط من تحت */
+  background-repeat: no-repeat;       /* منع تكرار الخلفية */
+  background-size: cover;             /* الخلفية تغطي كل الشاشة */
+}
+
+.home {
+  background-image: url("../assets/background-home-mobile.jpg"); /* خلفية الهوم بالموبايل افتراضيا */
+}
+
+.destination {
+  background-image: url("../assets/background-destination-mobile.jpg"); /* خلفية صفحة الوجهة بالموبايل */
+}
+
+.crew {
+  background-image: url("../assets/background-crew-mobile.jpg"); /* خلفية صفحة الطاقم بالموبايل */
+}
+
+.technology {
+  background-image: url("../assets/background-technology-mobile.jpg"); /* خلفية صفحة التكنولوجي بالموبايل */
+}
+
+/* ============================== لايوت صفحة الهوم ============================== */
+
+.grid-container {
+  text-align: center;             /* توسيط النص في الموبايل */
+  display: grid;                  /* استخدام جريد للترتيب */
+  place-items: center;            /* توسيط العناصر أفقيا ورأسيا */
+  padding-inline: 1rem;           /* حشو جانبي */
+  padding-bottom: 4rem;           /* مسافة من تحت */
+}
+
+.grid-container p:not([class]) {
+  max-width: 50ch; /* أقصى طول سطر للفقرات العادية عشان تفضل مقروءة */
+}
+
+.numbered-title {
+  grid-area: title; /* اسم منطقة في الجريد هنستخدمه في الميديا كويريز */
+}
+
+/* الصفحة الرئيسية تحديدا */
+.grid-container--home {
+  padding-bottom: 4rem; /* مسافة إضافية تحت المحتوى في الهوم */
+  grid-template-areas:
+    'title'
+    'button';           /* العنوان فوق والزرار تحته (قبل كده الاتنين كانوا فوق بعض) */
+  row-gap: 4rem;        /* مسافة بين النص والزرار */
+}
+
+.grid-container--home > *:first-child {
+  grid-area: title; /* العنوان الفرعي "SO YOU WANT TO..." */
+  margin-top: 2rem; /* مسافة من فوق */
+}
+
+.grid-container--home > *:last-child {
+  grid-area: button; /* زرار الـ Explore */
+}
+
+.large-button {
+  font-size: 1.25rem;                       /* حجم النص جوه الزرار (صغير بالموبايل) */
+  position: relative;                        /* عشان نقدر نحط دايرة خلفه بالـ ::after */
+  display: inline-grid;                      /* عشان نوسط النص جواه */
+  z-index: 1;                                /* يفضل فوق الدايرة المتحركة */
+  place-items: center;                       /* توسيط النص جوه الدايرة */
+  padding: 0 2em;                            /* حشو جانبي يخلي الزرار دائري كبير */
+  border-radius: 50%;                        /* شكل دائري */
+  aspect-ratio: 1;                           /* عرض = ارتفاع */
+  text-decoration: none;                     /* بدون خط تحت النص */
+  background: hsl(var(--clr-white));         /* خلفية بيضاء */
+  color: hsl(var(--clr-dark));               /* نص غامق يتباين مع الأبيض */
+  font-family: var(--ff-serif);              /* خط العناوين */
+}
+
+.large-button::after {
+  content: '';                                /* عنصر فاضي للدايرة المتحركة حوالين الزرار */
+  position: absolute;                          /* تتموضع فوق الزرار بالظبط */
+  z-index: -1;                                 /* تتحط خلف نص الزرار */
+  width: 100%;                                 /* بنفس عرض الزرار بالبداية */
+  height: 100%;                                /* بنفس ارتفاعه */
+  border-radius: 50%;                          /* دايرة برضو */
+  background: hsl(var(--clr-white) / 0.15);    /* لون أبيض شفاف خفيف */
+  opacity: 0;                                  /* مخفية تماما في البداية */
+  transition: opacity 500ms linear, transform 500ms linear; /* حركة نعومة للتكبير والاختفاء */
+}
+
+.large-button:hover::after,
+.large-button:focus::after {
+  opacity: 1;                     /* تظهر الدايرة عند الهوفر */
+  transform: scale(1.5);          /* وتكبر شوية */
+}
+
+/* ============================ لايوت صفحة الوجهة (Destination) ============================ */
+
+.destination-image {
+  grid-area: image; /* صورة الكوكب/القمر */
+  align-self: center; /* توسيط رأسي */
+  padding-bottom: 1rem; /* مسافة تحت الصورة */
+}
+
+.destination-meta {
+  grid-area: meta;                 /* منطقة الأرقام (المسافة والوقت) */
+  flex-direction: column;          /* ترتيب عمودي بالموبايل */
+  border-top: 1px solid hsl(var(--clr-white) / 0.1); /* خط فاصل فوق */
+  padding-top: 2.5rem;             /* مسافة بعد الخط */
+  margin-top: 2.5rem;              /* مسافة قبل الخط */
+}
+
+.destination-meta p {
+  font-size: 1.75rem; /* حجم الرقم نفسه (225 MIL. KM مثلا) */
+}
+
+.destination-title {
+  grid-area: title; /* منطقة عنوان "01 PICK YOUR DESTINATION" */
+}
+
+.destination-subtitle {
+  grid-area: subtitle; /* منطقة اسم الكوكب زي "MARS" */
+}
+
+.tab-list {
+  grid-area: tabs;        /* منطقة تابات الاختيار بين الكواكب */
+  justify-content: center; /* توسيط أفقي */
+}
+
+.destination-info {
+  grid-area: content;    /* منطقة الوصف النصي للكوكب */
+  flex-direction: column; /* العنوان والوصف والميتا يترتبوا فوق بعض عمودي */
+  --gap: 1rem;             /* مسافة بسيطة بينهم */
+}
+
+/* الجريد اللي بيرتب كل عناصر صفحة الوجهة فوق بعض بالترتيب في الموبايل */
+.grid-container--destination {
+  grid-template-areas:
+    'title'
+    'image'
+    'tabs'
+    'content'
+    'meta';
+}
+
+/* ============================ لايوت صفحة الطاقم (Crew) ============================ */
+
+.grid-container--crew {
+  grid-template-areas:
+    'title'
+    'image'
+    'tabs'
+    'content';
+}
+
+.crew-image {
+  grid-area: image; /* صورة رائد الفضاء */
+  border-bottom: 1px solid hsl(var(--clr-white) / 0.1); /* خط فاصل تحت الصورة بالموبايل */
+}
+
+.crew-image img {
+  max-width: 60%; /* الصورة تاخد 60% بس من العرض في الموبايل عشان تبقى متناسقة */
+}
+
+.crew-content {
+  grid-area: content;     /* منطقة اسم ووظيفة ونبذة رائد الفضاء */
+  flex-direction: column;  /* الاسم والوظيفة فوق، والنبذة تحتهم */
+  --gap: 1rem;              /* مسافة بينهم */
+}
+
+.crew-content h2 {
+  color: hsl(var(--clr-white) / 0.5); /* الوظيفة (Commander مثلا) لونها باهت شوية */
+}
+
+.crew-title {
+  grid-area: title; /* عنوان "02 MEET YOUR CREW" */
+}
+
+.crew-dots {
+  grid-area: tabs; /* النقط اللي بنختار بيها رائد الفضاء */
+}
+
+/* ============================ لايوت صفحة التكنولوجي (Technology) ============================ */
+
+.grid-container--technology {
+  grid-template-areas:
+    'title'
+    'image'
+    'tabs'
+    'content';
+  padding-inline: 0; /* نلغي الحشو الجانبي هنا عشان الصورة تاخد العرض بالكامل */
+}
+
+.technology-title {
+  grid-area: title;      /* عنوان "03 SPACE LAUNCH 101" */
+  padding-inline: 1rem;  /* نرجع الحشو بس للعنوان */
+}
+
+.technology-image {
+  grid-area: image; /* صورة الصاروخ/المحطة/الكبسولة */
+}
+
+.technology-tabs {
+  grid-area: tabs; /* الأرقام 1 2 3 */
+}
+
+.technology-info {
+  grid-area: content;     /* اسم ووصف التكنولوجي */
+  padding-inline: 1rem;   /* حشو جانبي للنص */
+  flex-direction: column;  /* الاسم فوق والوصف تحته */
+  --gap: 1rem;              /* مسافة بينهم */
+}
+
+.technology-info h2 {
+  color: hsl(var(--clr-white) / 0.5); /* "THE TERMINOLOGY..." لونها باهت */
+}
+
+/* =============================== ميديا كويري للتابلت =============================== */
+@media (min-width: 35em) {
+  /* خلفيات مختلفة أوضح شوية للتابلت */
+  .home { background-image: url("../assets/background-home-tablet.jpg"); }
+  .destination { background-image: url("../assets/background-destination-tablet.jpg"); }
+  .crew { background-image: url("../assets/background-crew-tablet.jpg"); }
+  .technology { background-image: url("../assets/background-technology-tablet.jpg"); }
+
+  .numbered-title {
+    justify-self: start;  /* العنوان يترجع لليسار بدل التوسيط */
+    margin-top: 2rem;     /* مسافة من فوق */
+    text-align: left;     /* محاذاة يسار */
+  }
+
+  .grid-container--home {
+    padding-bottom: 6rem; /* مسافة أكبر تحت في التابلت */
+  }
+
+  .large-button {
+    font-size: 2rem; /* زرار أكبر من التابلت وطالع */
+  }
+
+  .primary-header::after {
+    display: none; /* الخط الفاصل ليه مكان في الديسكتوب بس، وفي التابلت كان بيعمل سكرول أفقي */
+  }
+
+  .grid-container--home > *:first-child {
+    margin-top: 0; /* نلغي المارجن اللي كان في الموبايل */
+  }
+
+  .primary-navigation {
+    padding-inline: 3rem; /* حشو جانبي أكبر للنافيجيشن */
+  }
+
+  .grid-container--destination {
+    grid-template-areas:
+      '. title title .'
+      '. image image .'
+      '. tabs tabs .'
+      '. content content .'
+      '. meta meta .';
+  }
+
+  .destination-meta {
+    flex-direction: row;               /* الأرقام تترتب جنب بعض أفقي في التابلت */
+    justify-content: space-evenly;     /* توزيع متساوي بينهم */
+  }
+
+  .crew-image {
+    grid-area: image; /* برضو صورة رائد الفضاء لكن هتاخد مساحة أكبر */
+  }
+
+  .grid-container--crew {
+    grid-template-columns: repeat(2, 1fr); /* عمودين في التابلت */
+    grid-template-areas:
+      'title title'
+      'content image'
+      'tabs image';
+  }
+
+  .crew-content {
+    text-align: left; /* النص يترجع لليسار */
+  }
+
+  .crew-dots {
+    justify-content: start; /* النقط تترجع لليسار */
+  }
+
+  .crew-image img {
+    max-width: 90%; /* الصورة تاخد مساحة أكبر في التابلت */
+  }
+}
+
+/* ================================ ميديا كويري للديسكتوب ================================ */
+@media (min-width: 64em) {
+  /* خلفيات الديسكتوب عالية الجودة */
+  .home { background-image: url("../assets/background-home-desktop.png"); }
+  .destination { background-image: url("../assets/background-destination-desktop.jpg"); }
+  .crew { background-image: url("../assets/background-crew-desktop.jpg"); }
+  .technology { background-image: url("../assets/background-technology-desktop.jpg"); }
+
+  .container {
+    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(1rem, 1fr); /* شبكة عريضة للديسكتوب */
+    column-gap: 2rem; /* مسافة بين الأعمدة */
+  }
+
+  .grid-container {
+    text-align: left;               /* محاذاة يسار للنصوص */
+    column-gap: var(--container-gap, 2rem); /* مسافة بين الأعمدة */
+    grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(2rem, 1fr); /* أعمدة الديسكتوب */
+  }
+
+  .grid-container--home > *:first-child {
+    grid-column: 2; /* العمود التاني */
+  }
+
+  .grid-container--home > *:last-child {
+    grid-row: 2;    /* الصف التاني */
+    grid-column: 3; /* العمود التالت (يمين) */
+  }
+
+  .grid-container--home {
+    grid-template-areas: none; /* الديسكتوب بيحدد الأعمدة والصفوف بنفسه تحت */
+    row-gap: 0;
+    justify-items: start; /* العناصر تترجع لليسار */
+    align-content: end;   /* تتحاذى مع الأسفل */
+    padding-bottom: 6rem; /* مسافة إضافية تحت */
+  }
+
+  /* شكل النافيجيشن في الديسكتوب: خط أبيض شفاف على شمال اللينكات */
+  .primary-header::after {
+    display: block;           /* نرجّع الخط في الديسكتوب */
+    order: 0;                 /* يترتب قبل باقي العناصر */
+    margin-right: -2.5rem;    /* يمتد لبره */
+    margin-left: 2rem;        /* مسافة بينه وبين اللوجو */
+  }
+
+  nav {
+    order: 1; /* النافيجيشن بعد الخط */
+  }
+
+  .primary-navigation {
+    margin-block: 2rem; /* مسافة فوق وتحت */
+  }
+
+  /* ---- تخطيط صفحة الوجهة في الديسكتوب ---- */
+  .grid-container--destination {
+    justify-items: start;                /* محاذاة يسار */
+    grid-template-areas:
+      '. title title .'
+      '. image tabs .'
+      '. image content .'
+      '. image meta .';
+  }
+
+  .destination-meta {
+    --gap: 4rem;              /* مسافة أكبر بين الأرقام */
+    justify-content: start;   /* تترجع لأول السطر */
+  }
+
+  .destination-image {
+    padding-bottom: 0; /* نشيل الحشو السفلي لأن الصورة بقت أكبر */
+  }
+
+  /* ---- تخطيط صفحة الطاقم في الديسكتوب ---- */
+  .grid-container--crew {
+    grid-template-columns: minmax(1rem, 1fr) minmax(0, 37rem) minmax(0, 23rem) minmax(1rem, 1fr); /* 4 أعمدة */
+    justify-items: start;                                /* محاذاة يسار */
+    grid-template-areas:
+      '. title title .'
+      '. content image .'
+      '. tabs image .';
+  }
+
+  .crew-image {
+    grid-column: span 2;   /* الصورة تاخد عمودين */
+    align-self: end;       /* الصورة تتحاذى مع الأسفل عشان تبان واقفة على الخط */
+  }
+
+  /* ---- تخطيط صفحة التكنولوجي في الديسكتوب ---- */
+  .grid-container--technology {
+    grid-template-columns: minmax(1rem, 1fr) minmax(0, 25rem) minmax(0, 30rem) minmax(0, 25rem) minmax(1rem, 1fr); /* 5 أعمدة */
+    justify-items: start;                                        /* محاذاة يسار */
+    grid-template-areas:
+      '. title title title .'
+      '. tabs content image .';
+  }
+
+  .technology-tabs {
+    flex-direction: column;   /* الأرقام عمودي على الديسكتوب زي التصميم */
+    --gap: 2rem;
+    align-self: center;
+  }
+
+  .technology-image img {
+    width: 100%; /* الصورة تاخد العرض المتاح بالكامل */
+  }
+}
+
+/* لو المستخدم مفعّل "تقليل الحركة" في جهازه، نلغي الانتقالات (زي انزلاق القايمة) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
