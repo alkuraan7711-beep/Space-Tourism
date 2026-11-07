@@ -2,7 +2,7 @@
 
 A responsive four-page website for a fictional space-travel company: Home, Destination, Crew and Technology. Built with plain HTML, CSS and JavaScript (no frameworks, no build step).
 
-**[Live demo](https://YOUR-LIVE-LINK-HERE)**
+**[Live demo](https://space-tourism-opal.vercel.app/)**
 
 ![Space-Tourism](./Screenshot%202026-11-07%20220521.png)
 
